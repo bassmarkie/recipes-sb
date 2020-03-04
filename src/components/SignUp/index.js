@@ -3,6 +3,7 @@ import { Link, withRouter } from 'react-router-dom'
 import { compose } from 'recompose'
 import { withFirebase } from '../Firebase'
 import * as ROUTES from '../../constants/routes'
+import { Message } from 'semantic-ui-react'
 
 const SignUpPage = () => (
   <div>
@@ -95,9 +96,9 @@ class SignUpFormBase extends Component {
   }
 }
 const SignUpLink = () => (
-  <p>
+  <Message>
     Don't have an account? <Link to={ROUTES.SIGN_UP}>Sign Up</Link>
-  </p>
+  </Message>
 )
 
 const SignUpForm = compose(withRouter, withFirebase)(SignUpFormBase)
