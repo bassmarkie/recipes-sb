@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import SignOutButton from '../SignOut'
 import * as ROUTES from '../../constants/routes'
 import { AuthUserContext } from '../Session'
+import { Menu } from 'semantic-ui-react'
 
 const Navigation = () => (
   <div>
@@ -14,9 +15,9 @@ const Navigation = () => (
 
 const NavigationAuth = () => (
   <ul>
-    <li>
+    {/* <li>
       <Link to={ROUTES.LANDING}>Landing</Link>
-    </li>
+    </li> */}
     <li>
       <Link to={ROUTES.HOME}>Home</Link>
     </li>
@@ -32,14 +33,14 @@ const NavigationAuth = () => (
   </ul>
 )
 const NavigationNonAuth = () => (
-  <ul>
-    <li>
+  <Menu>
+    {/* <li>
       <Link to={ROUTES.LANDING}>Landing</Link>
-    </li>
-    <li>
+    </li> */}
+    <Menu.Item>
       <Link to={ROUTES.SIGN_IN}>Sign In</Link>
-    </li>
-  </ul>
+    </Menu.Item>
+  </Menu>
 )
 
 export default Navigation
