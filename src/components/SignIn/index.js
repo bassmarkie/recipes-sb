@@ -5,15 +5,7 @@ import { SignUpLink } from '../SignUp'
 import { PasswordForgetLink } from '../PasswordForget'
 import { withFirebase } from '../Firebase'
 import * as ROUTES from '../../constants/routes'
-import {
-  Button,
-  Form,
-  Grid,
-  Header,
-  Image,
-  Message,
-  Segment
-} from 'semantic-ui-react'
+import { Button, Form, Grid, Header, Image, Segment } from 'semantic-ui-react'
 
 const SignInPage = () => (
   <Grid textAlign="center" style={{ height: '100vh' }} verticalAlign="middle">
@@ -63,6 +55,7 @@ class SignInFormBase extends Component {
             fluid
             icon="user"
             iconPosition="left"
+            name="email"
             value={email}
             onChange={this.onChange}
             placeholder="Email Address"
@@ -71,6 +64,7 @@ class SignInFormBase extends Component {
             fluid
             icon="lock"
             iconPosition="left"
+            name="password"
             value={password}
             onChange={this.onChange}
             type="password"
