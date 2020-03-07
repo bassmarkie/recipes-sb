@@ -53,7 +53,7 @@ class SignInFormBase extends Component {
         <Segment>
           <Form.Input
             fluid
-            icon="user"
+            icon="mail"
             iconPosition="left"
             name="email"
             value={email}
