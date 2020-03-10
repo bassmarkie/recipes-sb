@@ -72,7 +72,7 @@ class SignUpFormBase extends Component {
   }
 
   onChangeCheckbox = event => {
-    this.setState({ [event.target.name]: true })
+    this.setState({ isAdmin: true })
   }
 
   render() {
@@ -137,7 +137,7 @@ class SignUpFormBase extends Component {
           <Checkbox
             label="make admin"
             name="isAdmin"
-            value={isAdmin}
+            checked={isAdmin}
             onChange={this.onChangeCheckbox}
           />
           <Button
