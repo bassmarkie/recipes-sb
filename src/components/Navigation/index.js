@@ -2,13 +2,20 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import SignOutButton from '../SignOut'
 import * as ROUTES from '../../constants/routes'
+import * as ROLES from '../../constants/roles'
 import { AuthUserContext } from '../Session'
 import { Menu, Image } from 'semantic-ui-react'
 
 const Navigation = () => (
   <div>
     <AuthUserContext.Consumer>
-      {authUser => (authUser ? <NavigationAuth /> : <NavigationNonAuth />)}
+      {authUser =>
+        authUser ? (
+          <NavigationAuth authUser={authUser} />
+        ) : (
+          <NavigationNonAuth />
+        )
+      }
     </AuthUserContext.Consumer>
   </div>
 )
@@ -41,13 +48,15 @@ class NavigationAuth extends React.Component {
           as={Link}
           to={ROUTES.ACCOUNT}
         />
-        <Menu.Item
-          name="Admin"
-          active={activeItem === 'Admin'}
-          onClick={this.handleItemClick}
-          as={Link}
-          to={ROUTES.ADMIN}
-        />
+        {!!this.props.authUser.roles[ROLES.ADMIN] && (
+          <Menu.Item
+            name="Admin"
+            active={activeItem === 'Admin'}
+            onClick={this.handleItemClick}
+            as={Link}
+            to={ROUTES.ADMIN}
+          />
+        )}
         <Menu.Menu position="right">
           <Menu.Item>
             <SignOutButton />
