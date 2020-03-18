@@ -68,9 +68,9 @@ class Firebase {
 
   // *** Recipes API ***
   recipe = rid => this.db.ref(`recipes/${rid}`)
-  recipes = () => this.deb.ref('recipes')
+  recipes = () => this.db.ref('recipes')
 
-  ingredient = iid => this.deb.ref(`ingredients/${iid}`)
-  ingredients = () => this.deb.ref('ingredients')
+  ingredient = iid => this.db.ref(`ingredients/${iid}`)
+  ingredients = () => this.db.ref('ingredients')
 }
 export default Firebase
