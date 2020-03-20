@@ -30,16 +30,22 @@ class NavigationAuth extends React.Component {
 
     return (
       <Menu secondary>
-        <Menu.Item>
-          <Image src="/logo16.png" />
-        </Menu.Item>
-        <Menu.Item header>Recipes-SB</Menu.Item>
         <Menu.Item
           name="Home"
           active={activeItem === 'Home'}
           onClick={this.handleItemClick}
           as={Link}
           to={ROUTES.HOME}
+        >
+          <Image src="/logo16.png" />
+          <Menu.Header> Home</Menu.Header>
+        </Menu.Item>
+        <Menu.Item
+          name="Recipes"
+          active={activeItem === 'Recipes'}
+          onClick={this.handleItemClick}
+          as={Link}
+          to={ROUTES.RECIPES}
         />
         <Menu.Item
           name="Account"

@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 import { compose } from 'recompose'
-// import { withAuthorization } from '../Session'
+import { RecipeCard } from './RecipeCard'
+import { RecipeFull } from './RecipeFull'
 import { withFirebase } from '../Firebase'
 import { Card } from 'semantic-ui-react'
 
-class RecipesBase extends Component {
+class RecipesPage extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -47,7 +48,7 @@ class RecipesBase extends Component {
         {recipes ? (
           <Card.Group>
             {recipes.map(recipe => (
-              <RecipeCard key={recipe.rid} recipe={recipe} />
+              <RecipeFull key={recipe.rid} recipe={recipe} />
             ))}
           </Card.Group>
         ) : (
@@ -58,21 +59,4 @@ class RecipesBase extends Component {
   }
 }
 
-export const RecipeCard = ({ recipe }) => (
-  <Card>
-    <Card.Content>
-      <Card.Header content={recipe.name} />
-
-      <RecipeItem key={recipe.rid} recipe={recipe} />
-    </Card.Content>
-  </Card>
-)
-
-const RecipeItem = ({ recipe }) => (
-  <li>
-    <strong>{recipe.rid}</strong> {recipe.instructions}
-  </li>
-)
-
-const Recipes = compose(withRouter, withFirebase)(RecipesBase)
-export { Recipes }
+export default compose(withRouter, withFirebase)(RecipesPage)
