@@ -3,15 +3,29 @@ import React from 'react'
 import { PasswordForgetForm } from '../PasswordForget'
 import PasswordChangeForm from '../PasswordChange'
 import { withAuthorization, AuthUserContext } from '../Session'
+import { Grid, Header, Card } from 'semantic-ui-react'
 
 const AccountPage = () => (
   <AuthUserContext.Consumer>
     {authUser => (
-      <div>
-        <h1>Account: {authUser.email}</h1>
-        <PasswordForgetForm />
-        <PasswordChangeForm />
-      </div>
+      <Grid
+        textAlign="center"
+        style={{ height: '100vh' }}
+        // verticalAlign="middle"
+      >
+        <Grid.Column style={{ maxWidth: 450 }}>
+          <Header as="h2" color="orange" textAlign="center">
+            Account: {authUser.email}
+          </Header>
+
+          <PasswordForgetForm />
+
+          <Card>
+            <Card.Header content="Change Password" />
+            <PasswordChangeForm />
+          </Card>
+        </Grid.Column>
+      </Grid>
     )}
   </AuthUserContext.Consumer>
 )

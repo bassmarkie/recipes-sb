@@ -17,7 +17,7 @@ import {
 } from 'semantic-ui-react'
 
 const SignUpPage = () => (
-  <Grid textAlign="center" style={{ height: '100vh' }} verticalAlign="middle">
+  <Grid textAlign="center" style={{ height: '100vh' }}>
     <Grid.Column style={{ maxWidth: 450 }}>
       <Header as="h2" color="orange" textAlign="center">
         <Image src="/logo512.png" /> Sign Up For An Account

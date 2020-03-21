@@ -8,7 +8,7 @@ import * as ROUTES from '../../constants/routes'
 import { Button, Form, Grid, Header, Image, Segment } from 'semantic-ui-react'
 
 const SignInPage = () => (
-  <Grid textAlign="center" style={{ height: '100vh' }} verticalAlign="middle">
+  <Grid textAlign="center" style={{ height: '100vh' }}>
     <Grid.Column style={{ maxWidth: 450 }}>
       <Header as="h2" color="orange" textAlign="center">
         <Image src="/logo512.png" /> Sign In To Your Account
