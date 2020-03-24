@@ -9,14 +9,17 @@ import PasswordForgetPage from '../PasswordForget'
 import HomePage from '../Home'
 import AccountPage from '../Account'
 import AdminPage from '../Admin'
-import RecipesPage from '../Recipe'
+import RecipesPage from '../RecipesPage'
+import RecipeFull from '../RecipeFull'
+
+import { Container } from 'semantic-ui-react'
 
 import * as ROUTES from '../../constants/routes'
 import { withAuthentication } from '../Session'
 
 const App = () => (
   <Router>
-    <div>
+    <Container text>
       <Navigation />
       <Route exact path={ROUTES.LANDING} component={HomePage} />
       <Route path={ROUTES.SIGN_UP} component={SignUpPage} />
@@ -26,7 +29,8 @@ const App = () => (
       <Route path={ROUTES.ACCOUNT} component={AccountPage} />
       <Route path={ROUTES.ADMIN} component={AdminPage} />
       <Route path={ROUTES.RECIPES} component={RecipesPage} />
-    </div>
+      <Route path={ROUTES.RECIPE} component={RecipeFull} />
+    </Container>
   </Router>
 )
 export default withAuthentication(App)

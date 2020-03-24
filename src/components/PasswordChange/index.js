@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Card, Button, Form } from 'semantic-ui-react'
+import { Button, Form } from 'semantic-ui-react'
 import { withFirebase } from '../Firebase'
 const INITIAL_STATE = {
   passwordOne: '',

@@ -38,7 +38,6 @@ class NavigationAuth extends React.Component {
           to={ROUTES.HOME}
         >
           <Image src="/logo16.png" />
-          <Menu.Header> Home</Menu.Header>
         </Menu.Item>
         <Menu.Item
           name="Recipes"
