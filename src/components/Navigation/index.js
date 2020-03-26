@@ -1,17 +1,18 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import SignOutButton from '../SignOut'
+import { withFirebase } from '../Firebase'
+// import SignOutButton from '../SignOut'
 import * as ROUTES from '../../constants/routes'
 import * as ROLES from '../../constants/roles'
 import { AuthUserContext } from '../Session'
-import { Menu, Image } from 'semantic-ui-react'
+import { Menu, Image, Header } from 'semantic-ui-react'
 
-const Navigation = () => (
+const Navigation = ({ firebase }) => (
   <div>
     <AuthUserContext.Consumer>
       {authUser =>
         authUser ? (
-          <NavigationAuth authUser={authUser} />
+          <NavigationAuth authUser={authUser} firebase={firebase} />
         ) : (
           <NavigationNonAuth />
         )
@@ -21,8 +22,10 @@ const Navigation = () => (
 )
 
 class NavigationAuth extends React.Component {
-  state = {}
-
+  constructor(props) {
+    super(props)
+    this.state = {}
+  }
   handleItemClick = (e, { name }) => this.setState({ activeItem: name })
 
   render() {
@@ -63,8 +66,10 @@ class NavigationAuth extends React.Component {
           />
         )}
         <Menu.Menu position="right">
-          <Menu.Item>
-            <SignOutButton />
+          <Menu.Item onClick={this.props.firebase.doSignOut}>
+            <Header size="tiny" color="red">
+              Logout
+            </Header>
           </Menu.Item>
         </Menu.Menu>
       </Menu>
@@ -113,4 +118,4 @@ class NavigationNonAuth extends React.Component {
   }
 }
 
-export default Navigation
+export default withFirebase(Navigation)

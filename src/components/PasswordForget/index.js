@@ -38,8 +38,8 @@ class PasswordForgetFormBase extends Component {
     const { email, error } = this.state
     const isInvalid = email === ''
     return (
-      <Card>
-        <Card.Header content="Forget Password" />
+      <Card centered>
+        <Card.Header content="Forget Password" textAlign="center" />
         <Form onSubmit={this.onSubmit}>
           <Form.Input
             name="email"
@@ -48,7 +48,7 @@ class PasswordForgetFormBase extends Component {
             type="text"
             placeholder="Email Address"
           />
-          <Button disabled={isInvalid} type="submit">
+          <Button disabled={isInvalid} type="submit" fluid>
             Reset My Password
           </Button>
           {error && <p>{error.message}</p>}

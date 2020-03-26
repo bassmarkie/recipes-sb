@@ -8,19 +8,15 @@ import { Grid, Header, Card } from 'semantic-ui-react'
 const AccountPage = () => (
   <AuthUserContext.Consumer>
     {authUser => (
-      <Grid
-        textAlign="center"
-        style={{ height: '100vh' }}
-        // verticalAlign="middle"
-      >
+      <Grid textAlign="center" style={{ height: '100vh' }} columns={1} padded>
         <Grid.Column style={{ maxWidth: 450 }}>
           <Header as="h2" color="orange" textAlign="center">
             Account: {authUser.email}
           </Header>
 
-          <PasswordForgetForm />
+          <PasswordForgetForm centered />
 
-          <Card>
+          <Card centered>
             <Card.Header content="Change Password" />
             <PasswordChangeForm />
           </Card>

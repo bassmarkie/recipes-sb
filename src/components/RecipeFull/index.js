@@ -59,15 +59,17 @@ const RecipeFull = props => {
       {recipe ? (
         <Segment.Group>
           <Segment>
-            <Label attached="top left" content={recipe.category} />
-            <Header as="h1" content={recipe.name} />
+            <Label ribbon color="orange" content={recipe.category}></Label>
+            <span>
+              <Header as="h1" content={recipe.name} />
+            </span>
           </Segment>
           <Divider horizontal>Ingredients</Divider>
-          <Grid columns="equal" padded>
+          <Grid stackable columns={3} padded>
             <Grid.Row>
               <Grid.Column>
                 <Segment>
-                  <Label attached="top left" content="spices" />
+                  <Label attached="top" content="spices" />
                   {spices.map(x => (
                     <Container key={x} content={x} />
                   ))}
@@ -75,7 +77,7 @@ const RecipeFull = props => {
               </Grid.Column>
               <Grid.Column>
                 <Segment>
-                  <Label attached="top left" content="main" />
+                  <Label attached="top" content="main" />
                   {main.map(x => (
                     <Container key={x} content={x} />
                   ))}
@@ -83,7 +85,7 @@ const RecipeFull = props => {
               </Grid.Column>
               <Grid.Column>
                 <Segment>
-                  <Label attached="top left" content="misc" />
+                  <Label attached="top" content="misc" />
                   {misc.map(x => (
                     <Container key={x} content={x} />
                   ))}
