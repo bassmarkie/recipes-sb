@@ -3,6 +3,7 @@ import { withRouter } from 'react-router-dom'
 import { compose } from 'recompose'
 
 import { withFirebase } from '../Firebase'
+import { RecipeCard } from '../RecipeCard'
 import { Card, Dimmer, Loader } from 'semantic-ui-react'
 
 const RecipesPage = props => {
@@ -35,12 +36,7 @@ const RecipesPage = props => {
       {recipes ? (
         <Card.Group>
           {recipes.map(recipe => (
-            <Card key={recipe.rid} href={`recipe/${recipe.rid}`}>
-              <Card.Content>
-                <Card.Header content={recipe.name} />
-                <Card.Meta content={recipe.category} />
-              </Card.Content>
-            </Card>
+            <RecipeCard recipe={recipe} key={recipe.rid} />
           ))}
         </Card.Group>
       ) : (

@@ -1,11 +1,12 @@
 import React from 'react'
 
 import { withAuthorization } from '../Session'
-// import { withFirebase } from '../Firebase'
+import RecipeAddPage from '../RecipeAdd'
 
-const HomePage = () => (
+const HomePage = props => (
   <div>
     <h1>Home Page</h1>
+    <RecipeAddPage props={props} />
   </div>
 )
 

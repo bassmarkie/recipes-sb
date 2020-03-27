@@ -69,6 +69,12 @@ class Firebase {
   // *** Recipes API ***
   recipe = rid => this.db.ref(`recipes/${rid}`)
   recipes = () => this.db.ref('recipes')
+  recipeAddRef = recipe =>
+    this.db
+      .ref('recipes')
+      .push()
+      .set(recipe)
+  recipeEditRef = () => this.db.ref.child('recipes').update()
 
   ingredient = iid => this.db.ref(`ingredients/${iid}`)
   ingredients = () => this.db.ref('ingredients')
