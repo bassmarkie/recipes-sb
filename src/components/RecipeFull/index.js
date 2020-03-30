@@ -97,8 +97,11 @@ const RecipeFull = props => {
           <Grid columns={1} padded>
             <Grid.Row>
               <Grid.Column>
-                {recipe.instructions.map((x, i) => (
-                  <Container key={x} content={`${i + 1}. ${x}`} />
+                {Object.keys(recipe.instructions).map((x, i) => (
+                  <Container
+                    key={x}
+                    content={`${x} - ${recipe.instructions[x]}`}
+                  />
                 ))}
               </Grid.Column>
             </Grid.Row>

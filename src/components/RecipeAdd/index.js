@@ -28,52 +28,153 @@ export const RecipeAddPage = props => (
   </Grid>
 )
 
-const RecipeAddForm = props => {
-  const onSubmit = data => {
-    console.log('recipe', data)
-    return props.props.props.firebase.recipeAddRef(data)
+class RecipeAddForm extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = { name: '', ingredients: {}, instructions: {} }
   }
-  const { register, handleSubmit, setValue, setError } = useForm({
-    mode: 'onSubmit',
-    defaultValues: {
-      name: '',
-      ingredients: {},
-      instructions: []
-    }
-  })
 
-  useEffect(() => {
-    register({ name: 'name' }, { required: true })
-    register({ ingredients: {} })
-    register({ instructions: [] })
-  }, [])
+  onSubmit = event => {
+    this.props.props.props.firebase.recipeAddRef(this.state)
+    console.log('recipe', this.state)
+  }
 
-  return (
-    <Form size="large" onSubmit={handleSubmit(onSubmit)}>
-      <Segment>
-        <Form.Input
-          fluid
-          icon="user outline"
-          iconPosition="left"
-          name="name"
-          onChange={e => setValue('name', e.target.value)}
-          type="text"
-          placeholder="Name"
-        />
+  onChange = event => {
+    this.setState({ [event.target.name]: event.target.value })
+  }
+  onIngChange = event => {
+    this.setState({
+      [event.target.name]: { [event.target.value]: { amount: 2, type: 'main' } }
+    })
+  }
+  onInstChange = event => {
+    const num = Object.keys(this.state.instructions).length
 
-        <Button
-          type="submit"
-          color="orange"
-          fluid
-          size="large"
-          // disabled={isInvalid}
-        >
-          Sign In
-        </Button>
-      </Segment>
-      {/* {error && <p>{error.message}</p>} */}
-    </Form>
-  )
+    this.setState({
+      [event.target.name]: {
+        [Object.keys(this.state.instructions).length]: event.target.value
+      }
+    })
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (
+      Object.keys(prevState.instructions).length !==
+      Object.keys(this.state.instructions).length
+    )
+      console.log('rerender', Object.keys(this.state.instructions).length)
+  }
+
+  render() {
+    return (
+      <Form size="large" onSubmit={this.onSubmit}>
+        <Segment basic>
+          <Form.Input
+            fluid
+            icon="food"
+            iconPosition="left"
+            name="name"
+            onChange={this.onChange}
+            type="text"
+            placeholder="Name of Recipe"
+          />
+          <Form.Input
+            fluid
+            icon="food"
+            iconPosition="left"
+            name="ingredients"
+            onChange={this.onIngChange}
+            type="text"
+            placeholder="Name of Ingredient"
+          />
+          <Form.Input
+            fluid
+            icon="food"
+            iconPosition="left"
+            name="instructions"
+            // key={Object.keys(this.state.instructions).length}
+            onChange={this.onInstChange}
+            type="text"
+            placeholder="Instruction"
+          />
+          <Form.Input
+            fluid
+            icon="food"
+            iconPosition="left"
+            name="instructions"
+            // key={Object.keys(this.state.instructions).length}
+            onChange={this.onInstChange}
+            type="text"
+            placeholder="Instruction"
+          />
+
+          <Button
+            type="submit"
+            color="orange"
+            fluid
+            size="large"
+            // disabled={isInvalid}
+          >
+            Add Your Recipe
+          </Button>
+        </Segment>
+        {/* {error && <p>{error.message}</p>} */}
+      </Form>
+    )
+  }
 }
+
+// const RecipeAddForm2 = props => {
+//   const onSubmit = data => {
+//     console.log('recipe', data)
+//     return props.props.props.firebase.recipeAddRef(data)
+//   }
+//   const { register, handleSubmit, setValue, setError } = useForm({
+//     mode: 'onSubmit',
+//     defaultValues: {}
+//   })
+
+//   useEffect(() => {
+//     register({ name: 'name' }, { required: true })
+//     register({ ingredients: {} })
+//     register({ instructions: [] })
+//   }, [])
+
+//   return (
+//     <Form size="large" onSubmit={handleSubmit(onSubmit)}>
+//       <Segment basic>
+//         <Form.Input
+//           fluid
+//           icon="food"
+//           iconPosition="left"
+//           name="name"
+//           onChange={e => setValue('name', e.target.value)}
+//           type="text"
+//           placeholder="Name of Recipe"
+//         />
+
+//         <Form.Input
+//           fluid
+//           icon="food"
+//           iconPosition="left"
+//           name="ingredients"
+//           onChange={e => setValue('ingredients', e.target.value)}
+//           type="text"
+//           placeholder="Name of Ingredient"
+//         />
+//         <Button
+//           type="submit"
+//           color="orange"
+//           fluid
+//           size="large"
+//           // disabled={isInvalid}
+//         >
+//           Add Your Recipe
+//         </Button>
+//       </Segment>
+//       {/* {error && <p>{error.message}</p>} */}
+//     </Form>
+//   )
+// }
 
 export default RecipeAddPage
