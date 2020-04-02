@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Form, Segment } from 'semantic-ui-react'
+import { Button, Form, Segment, Divider } from 'semantic-ui-react'
 
 export default class RecipeAddForm extends React.Component {
   constructor(props) {
@@ -7,9 +7,25 @@ export default class RecipeAddForm extends React.Component {
     this.state = { name: '', ingredients: {}, instructions: { 1: '' } }
   }
 
+  function
   onSubmit = event => {
-    this.props.props.props.firebase.recipeAddRef(this.state)
-    console.log('recipe', this.state)
+    const removeNull = data => {
+      var str_data = JSON.stringify(data, function(k, obj) {
+        for (var propName in obj) {
+          if (obj[propName] === '' || obj[propName] === undefined) {
+            delete obj[propName]
+          }
+        }
+        return obj
+      })
+      return JSON.parse(str_data)
+    }
+
+    const recipe = this.state
+    const cleanRecipe = removeNull(recipe)
+
+    this.props.props.props.firebase.recipeAddRef(cleanRecipe)
+    console.log('recipe', cleanRecipe)
   }
 
   onNameChange = event => {
@@ -17,6 +33,7 @@ export default class RecipeAddForm extends React.Component {
   }
   onIngChange = event => {
     this.setState({
+      ...this.state,
       [event.target.name]: { [event.target.value]: { amount: 2, type: 'main' } }
     })
   }
@@ -42,12 +59,22 @@ export default class RecipeAddForm extends React.Component {
       })
     }
   }
+  onIngTypeChange = event => {
+    console.log('type', event.target)
+  }
 
   render() {
     let instCount = [...Object.keys(this.state.instructions)]
+    const options = [
+      { key: {}, text: 'spices', value: 'spices' },
+      { key: 'main', text: 'main', value: 'main' },
+      { key: 'misc', text: 'misc', value: 'misc' }
+    ]
+    // const currentIngredient
     return (
       <Form size="large" onSubmit={this.onSubmit}>
         <Segment basic>
+          <Divider horizontal>Name of Recipe</Divider>
           <Form.Input
             fluid
             icon="food"
@@ -57,15 +84,27 @@ export default class RecipeAddForm extends React.Component {
             type="text"
             placeholder="Name of Recipe"
           />
-          <Form.Input
-            fluid
-            icon="food"
-            iconPosition="left"
-            name="ingredients"
-            onChange={this.onIngChange}
-            type="text"
-            placeholder="Name of Ingredient"
-          />
+          <Divider horizontal>Ingredients</Divider>
+          <Segment.Group>
+            <Form.Input
+              action
+              fluid
+              // icon="food"
+              iconPosition="left"
+              name="ingredients"
+              onChange={this.onIngChange}
+              type="text"
+              placeholder="Name of Ingredient"
+            />
+          </Segment.Group>
+          {/* <input /> */}
+          {/* <Form.Select
+                compact
+                options={options}
+                defaultValue="type"
+                onChange={this.onIngTypeChange}
+              /> */}
+
           {instCount.map(x => (
             <Form.Input
               key={x}
