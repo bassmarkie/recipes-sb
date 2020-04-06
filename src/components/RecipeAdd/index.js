@@ -10,7 +10,7 @@ import { Grid, Header, Image } from 'semantic-ui-react'
 
 export const RecipeAddPage = props => (
   <Grid textAlign="center" style={{ height: '100vh' }}>
-    <Grid.Column style={{ maxWidth: 450 }}>
+    <Grid.Column>
       <Header as="h2" color="orange" textAlign="center">
         <Image src="/logo512.png" /> Add Recipe
       </Header>

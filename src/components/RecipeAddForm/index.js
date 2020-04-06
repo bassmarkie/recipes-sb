@@ -1,17 +1,27 @@
 import React from 'react'
-import { Button, Form, Segment, Divider } from 'semantic-ui-react'
+import { Button, Form, Segment, Divider, Grid, Label } from 'semantic-ui-react'
 
 export default class RecipeAddForm extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { name: '', ingredients: {}, instructions: { 1: '' } }
+    this.state = {
+      name: '',
+      ingredients: {},
+      instructions: { 1: '' },
+      category: ''
+    }
   }
 
-  function
   onSubmit = event => {
     const removeNull = data => {
       var str_data = JSON.stringify(data, function(k, obj) {
         for (var propName in obj) {
+          if (obj.currentIngredient) {
+            delete obj.currentIngredient
+          }
+          if (obj.ingCount) {
+            delete obj.ingCount
+          }
           if (obj[propName] === '' || obj[propName] === undefined) {
             delete obj[propName]
           }
@@ -30,12 +40,6 @@ export default class RecipeAddForm extends React.Component {
 
   onNameChange = event => {
     this.setState({ [event.target.name]: event.target.value })
-  }
-  onIngChange = event => {
-    this.setState({
-      ...this.state,
-      [event.target.name]: { [event.target.value]: { amount: 2, type: 'main' } }
-    })
   }
 
   onInstChange = event => {
@@ -59,62 +63,132 @@ export default class RecipeAddForm extends React.Component {
       })
     }
   }
-  onIngTypeChange = event => {
-    console.log('type', event.target)
+
+  onIngChange = event => {
+    this.setState({
+      currentIngredient: event.target.value
+    })
+  }
+
+  onIngAmountChange = event => {
+    console.log(event.target)
+    this.setState({
+      ingredients: {
+        ...this.state.ingredients,
+        [this.state.currentIngredient]: {
+          amount: event.target.value,
+          type: 'spices'
+        }
+      }
+    })
+  }
+
+  componentDidMount() {
+    this.setState({ ...this.state, ingCount: [1] })
+  }
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.ingredients !== this.state.ingredients) {
+      let count = [...Object.keys(this.state.ingredients)]
+      this.setState({ ingCount: count })
+    }
   }
 
   render() {
     let instCount = [...Object.keys(this.state.instructions)]
-    const options = [
-      { key: {}, text: 'spices', value: 'spices' },
-      { key: 'main', text: 'main', value: 'main' },
-      { key: 'misc', text: 'misc', value: 'misc' }
-    ]
-    // const currentIngredient
+
+    let currentIngredient = this.state.currentIngredient
+
+    let ingCount = []
+
+    if (this.state.ingCount) {
+      ingCount = this.state.ingCount
+    }
+    console.log(ingCount)
+
     return (
-      <Form size="large" onSubmit={this.onSubmit}>
+      <Form onSubmit={this.onSubmit}>
         <Segment basic>
           <Divider horizontal>Name of Recipe</Divider>
           <Form.Input
             fluid
-            icon="food"
+            icon="pencil"
             iconPosition="left"
             name="name"
             onChange={this.onNameChange}
             type="text"
             placeholder="Name of Recipe"
           />
+          <Divider horizontal>Recipe Type</Divider>
+          <Form.Input
+            fluid
+            icon="food"
+            iconPosition="left"
+            name="category"
+            onChange={this.onNameChange}
+            type="text"
+            placeholder="Choose a Recipe Type"
+          />
           <Divider horizontal>Ingredients</Divider>
-          <Segment.Group>
-            <Form.Input
-              action
-              fluid
-              // icon="food"
-              iconPosition="left"
-              name="ingredients"
-              onChange={this.onIngChange}
-              type="text"
-              placeholder="Name of Ingredient"
-            />
-          </Segment.Group>
-          {/* <input /> */}
-          {/* <Form.Select
-                compact
-                options={options}
-                defaultValue="type"
-                onChange={this.onIngTypeChange}
-              /> */}
 
+          <Segment basic>
+            <Label attached="top" content="spices" />
+
+            <Segment basic key="1">
+              <Form.Input
+                fluid
+                icon="shopping basket"
+                iconPosition="left"
+                name="spices"
+                onChange={this.onIngChange}
+                type="text"
+                placeholder="Name of Ingredient"
+              />
+              {currentIngredient && (
+                <Form.Input
+                  inline
+                  label="Amount"
+                  name={currentIngredient}
+                  placeholder="amount"
+                  onChange={this.onIngAmountChange}
+                />
+              )}
+            </Segment>
+
+            {ingCount.map(x => (
+              <Segment basic key={x}>
+                <Form.Input
+                  fluid
+                  icon="shopping basket"
+                  iconPosition="left"
+                  name="spices"
+                  onChange={this.onIngChange}
+                  type="text"
+                  placeholder="Name of Ingredient"
+                />
+                {currentIngredient && (
+                  <Form.Input
+                    inline
+                    label="Amount"
+                    name={currentIngredient}
+                    placeholder="amount"
+                    onChange={this.onIngAmountChange}
+                  />
+                )}
+              </Segment>
+            ))}
+          </Segment>
+
+          <Divider horizontal>Instructions</Divider>
           {instCount.map(x => (
             <Form.Input
               key={x}
               fluid
-              icon="food"
+              icon="tasks"
               iconPosition="left"
               name={x}
               onChange={this.onInstChange}
               type="text"
-              placeholder="Instruction"
+              placeholder={x}
             />
           ))}
           <Button
