@@ -17,7 +17,7 @@ const RecipesPage = props => {
       if (recipesObject) {
         const recipesList = Object.keys(recipesObject).map(key => ({
           ...recipesObject[key],
-          rid: key
+          rid: key,
         }))
         setLoading(false)
         setRecipes(recipesList)
@@ -25,6 +25,7 @@ const RecipesPage = props => {
     })
     if (recipes) props.firebase.recipes().off()
   })
+  console.log(recipes)
 
   return (
     <div>

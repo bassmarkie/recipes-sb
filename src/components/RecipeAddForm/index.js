@@ -6,15 +6,15 @@ export default class RecipeAddForm extends React.Component {
     super(props)
     this.state = {
       name: '',
-      ingredients: {},
+      ingredients: false,
       instructions: { 1: '' },
-      category: ''
+      category: '',
     }
   }
 
   onSubmit = event => {
     const removeNull = data => {
-      var str_data = JSON.stringify(data, function(k, obj) {
+      var str_data = JSON.stringify(data, function (k, obj) {
         for (var propName in obj) {
           if (obj.currentIngredient) {
             delete obj.currentIngredient
@@ -51,22 +51,22 @@ export default class RecipeAddForm extends React.Component {
         instructions: {
           ...this.state.instructions,
           [num]: event.target.value,
-          [newNum]: ''
-        }
+          [newNum]: '',
+        },
       })
     } else {
       this.setState({
         instructions: {
           ...this.state.instructions,
-          [num]: event.target.value
-        }
+          [num]: event.target.value,
+        },
       })
     }
   }
 
   onIngChange = event => {
     this.setState({
-      currentIngredient: event.target.value
+      currentIngredient: event.target.value,
     })
   }
 
@@ -77,14 +77,14 @@ export default class RecipeAddForm extends React.Component {
         ...this.state.ingredients,
         [this.state.currentIngredient]: {
           amount: event.target.value,
-          type: 'spices'
-        }
-      }
+          type: 'spices',
+        },
+      },
     })
   }
 
   componentDidMount() {
-    this.setState({ ...this.state, ingCount: [1] })
+    this.setState({ ...this.state, ingCount: false })
   }
   componentDidUpdate(prevProps, prevState) {
     if (prevState.ingredients !== this.state.ingredients) {
@@ -97,6 +97,7 @@ export default class RecipeAddForm extends React.Component {
     let instCount = [...Object.keys(this.state.instructions)]
 
     let currentIngredient = this.state.currentIngredient
+    console.log(currentIngredient, currentIngredient)
 
     let ingCount = []
 

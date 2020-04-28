@@ -10,7 +10,8 @@ import {
   Label,
   Container,
   Dimmer,
-  Loader
+  Loader,
+  Image,
 } from 'semantic-ui-react'
 
 const RecipeFull = props => {
@@ -25,6 +26,7 @@ const RecipeFull = props => {
         setLoading(false)
         setRecipe(recipe)
       }
+      console.log(recipe)
     })
     if (recipe) props.firebase.recipe(rid).off()
   })
@@ -63,6 +65,7 @@ const RecipeFull = props => {
             <span>
               <Header as="h1" content={recipe.name} />
             </span>
+            <Image src={recipe.image} fluid />
           </Segment>
           <Divider horizontal>Ingredients</Divider>
           <Grid stackable columns={3} padded>
