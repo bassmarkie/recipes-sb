@@ -25,7 +25,6 @@ const RecipesPage = props => {
     })
     if (recipes) props.firebase.recipes().off()
   })
-  console.log(recipes)
 
   return (
     <div>

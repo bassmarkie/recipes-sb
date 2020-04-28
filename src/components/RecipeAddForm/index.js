@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Form, Segment, Divider, Grid, Label } from 'semantic-ui-react'
+import { Button, Form, Segment, Divider, Label } from 'semantic-ui-react'
 
 export default class RecipeAddForm extends React.Component {
   constructor(props) {
@@ -34,8 +34,13 @@ export default class RecipeAddForm extends React.Component {
     const recipe = this.state
     const cleanRecipe = removeNull(recipe)
 
-    this.props.props.props.firebase.recipeAddRef(cleanRecipe)
-    console.log('recipe', cleanRecipe)
+    let newRecipe = this.props.props.props.firebase.recipeAddRef()
+
+    let rid = newRecipe.key
+
+    newRecipe.set(cleanRecipe).then(() => {
+      this.props.props.props.history.push(`/recipe/${rid}`)
+    })
   }
 
   onNameChange = event => {
@@ -71,7 +76,6 @@ export default class RecipeAddForm extends React.Component {
   }
 
   onIngAmountChange = event => {
-    console.log(event.target)
     this.setState({
       ingredients: {
         ...this.state.ingredients,
@@ -97,14 +101,12 @@ export default class RecipeAddForm extends React.Component {
     let instCount = [...Object.keys(this.state.instructions)]
 
     let currentIngredient = this.state.currentIngredient
-    console.log(currentIngredient, currentIngredient)
 
     let ingCount = []
 
     if (this.state.ingCount) {
       ingCount = this.state.ingCount
     }
-    console.log(ingCount)
 
     return (
       <Form onSubmit={this.onSubmit}>

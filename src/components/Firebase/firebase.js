@@ -8,7 +8,7 @@ const prodConfig = {
   databaseURL: process.env.REACT_APP_DATABASE_URL,
   projectId: process.env.REACT_APP_PROJECT_ID,
   storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
-  messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID
+  messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
 }
 const devConfig = {
   apiKey: process.env.REACT_APP_API_KEY,
@@ -16,7 +16,7 @@ const devConfig = {
   databaseURL: process.env.REACT_APP_DATABASE_URL,
   projectId: process.env.REACT_APP_PROJECT_ID,
   storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
-  messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID
+  messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
 }
 const config = process.env.NODE_ENV === 'production' ? prodConfig : devConfig
 class Firebase {
@@ -53,7 +53,7 @@ class Firebase {
             authUser = {
               uid: authUser.uid,
               email: authUser.email,
-              ...dbUser
+              ...dbUser,
             }
             next(authUser)
           })
@@ -69,11 +69,8 @@ class Firebase {
   // *** Recipes API ***
   recipe = rid => this.db.ref(`recipes/${rid}`)
   recipes = () => this.db.ref('recipes')
-  recipeAddRef = recipe =>
-    this.db
-      .ref('recipes')
-      .push()
-      .set(recipe)
+  recipeAddRef = () => this.db.ref('recipes').push()
+
   recipeEditRef = () => this.db.ref.child('recipes').update()
 
   ingredient = iid => this.db.ref(`ingredients/${iid}`)

@@ -26,7 +26,6 @@ const RecipeFull = props => {
         setLoading(false)
         setRecipe(recipe)
       }
-      console.log(recipe)
     })
     if (recipe) props.firebase.recipe(rid).off()
   })
