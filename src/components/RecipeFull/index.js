@@ -12,9 +12,10 @@ import {
   Dimmer,
   Loader,
   Image,
+  List,
 } from 'semantic-ui-react'
 
-const RecipeFull = props => {
+const RecipeFull2 = props => {
   const rid = props.match.params.rid
   const [loading, setLoading] = useState(true)
   const [recipe, setRecipe] = useState(null)
@@ -25,30 +26,11 @@ const RecipeFull = props => {
       if (recipe) {
         setLoading(false)
         setRecipe(recipe)
+        console.log(recipe.ingredients.type)
       }
     })
     if (recipe) props.firebase.recipe(rid).off()
   })
-
-  const spices = []
-  const main = []
-  const misc = []
-  if (recipe) {
-    for (let key in recipe.ingredients) {
-      if (recipe.ingredients[key].type === 'spices')
-        spices.push(`${recipe.ingredients[key].amount} ${key}`)
-    }
-
-    for (let key in recipe.ingredients) {
-      if (recipe.ingredients[key].type === 'main')
-        main.push(`${recipe.ingredients[key].amount} ${key}`)
-    }
-
-    for (let key in recipe.ingredients) {
-      if (recipe.ingredients[key].type === 'misc')
-        misc.push(`${recipe.ingredients[key].amount} ${key}`)
-    }
-  }
 
   return (
     <div>
@@ -60,40 +42,77 @@ const RecipeFull = props => {
       {recipe ? (
         <Segment.Group>
           <Segment>
-            <Label ribbon color="orange" content={recipe.category}></Label>
+            <Label
+              ribbon
+              color="orange"
+              size="large"
+              content={recipe.category}
+            ></Label>
             <span>
-              <Header as="h1" content={recipe.name} />
+              <Header textAlign="center" as="h1" content={recipe.name} />
             </span>
             <Image src={recipe.image} fluid />
           </Segment>
           <Divider horizontal>Ingredients</Divider>
-          <Grid stackable columns={3} padded>
-            <Grid.Row>
-              <Grid.Column>
-                <Segment>
-                  <Label attached="top" content="spices" />
-                  {spices.map(x => (
-                    <Container key={x} content={x} />
-                  ))}
-                </Segment>
-              </Grid.Column>
-              <Grid.Column>
-                <Segment>
-                  <Label attached="top" content="main" />
-                  {main.map(x => (
-                    <Container key={x} content={x} />
-                  ))}
-                </Segment>
-              </Grid.Column>
-              <Grid.Column>
-                <Segment>
-                  <Label attached="top" content="misc" />
-                  {misc.map(x => (
-                    <Container key={x} content={x} />
-                  ))}
-                </Segment>
-              </Grid.Column>
-            </Grid.Row>
+          <Grid stackable padded columns={3}>
+            {
+              <Grid.Row>
+                <Grid.Column>
+                  <Segment basic textAlign="center">
+                    <Label
+                      attached="top"
+                      size="large"
+                      content="m a i n"
+                      color="yellow"
+                    />
+                    {Object.keys(recipe.ingredients.type.main).map(x => (
+                      <List key={x}>
+                        <List.Item>
+                          <List.Header>{x}</List.Header>
+                          {recipe.ingredients.type.main[x]}
+                        </List.Item>
+                      </List>
+                    ))}
+                  </Segment>
+                </Grid.Column>
+                <Grid.Column>
+                  <Segment basic textAlign="center">
+                    <Label
+                      attached="top"
+                      size="large"
+                      content="s p i c e s"
+                      color="olive"
+                    />
+                    {Object.keys(recipe.ingredients.type.spices).map(x => (
+                      <List key={x}>
+                        <List.Item>
+                          <List.Header>{x}</List.Header>
+                          {recipe.ingredients.type.spices[x]}
+                        </List.Item>
+                      </List>
+                    ))}
+                  </Segment>
+                </Grid.Column>
+                <Grid.Column>
+                  <Segment basic textAlign="center">
+                    <Label
+                      attached="top"
+                      size="large"
+                      content="m i s c"
+                      color="grey"
+                    />
+                    {Object.keys(recipe.ingredients.type.misc).map(x => (
+                      <List key={x}>
+                        <List.Item>
+                          <List.Header>{x}</List.Header>
+                          {recipe.ingredients.type.misc[x]}
+                        </List.Item>
+                      </List>
+                    ))}
+                  </Segment>
+                </Grid.Column>
+              </Grid.Row>
+            }
           </Grid>
           <Divider horizontal>Instructions</Divider>
           <Grid columns={1} padded>
@@ -116,4 +135,4 @@ const RecipeFull = props => {
   )
 }
 
-export default compose(withRouter, withFirebase)(RecipeFull)
+export default compose(withRouter, withFirebase)(RecipeFull2)

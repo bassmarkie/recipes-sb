@@ -70,12 +70,14 @@ export default class RecipeAddForm extends React.Component {
   }
 
   onIngChange = event => {
+    console.log('ingredient change', event.target.dataset)
     this.setState({
       currentIngredient: event.target.value,
     })
   }
 
   onIngAmountChange = event => {
+    console.log('amount change', event.target.dataset)
     this.setState({
       ingredients: {
         ...this.state.ingredients,
@@ -118,7 +120,7 @@ export default class RecipeAddForm extends React.Component {
             iconPosition="left"
             name="name"
             onChange={this.onNameChange}
-            type="text"
+            type="spices"
             placeholder="Name of Recipe"
           />
           <Divider horizontal>Recipe Type</Divider>
