@@ -15,7 +15,7 @@ import {
   List,
 } from 'semantic-ui-react'
 
-const RecipeFull2 = props => {
+const RecipeFull = props => {
   const rid = props.match.params.rid
   const [loading, setLoading] = useState(true)
   const [recipe, setRecipe] = useState(null)
@@ -135,4 +135,4 @@ const RecipeFull2 = props => {
   )
 }
 
-export default compose(withRouter, withFirebase)(RecipeFull2)
+export default compose(withRouter, withFirebase)(RecipeFull)

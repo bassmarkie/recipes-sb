@@ -8,7 +8,7 @@ const withAuthentication = Component => {
     constructor(props) {
       super(props)
       this.state = {
-        authUser: JSON.parse(localStorage.getItem('authUser'))
+        authUser: JSON.parse(localStorage.getItem('authUser')),
       }
     }
     componentDidMount() {
@@ -29,7 +29,7 @@ const withAuthentication = Component => {
     render() {
       return (
         <AuthUserContext.Provider value={this.state.authUser}>
-          <Component {...this.props} />
+          <Component {...this.props} authUser={this.state.authUser} />
         </AuthUserContext.Provider>
       )
     }

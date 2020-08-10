@@ -36,7 +36,11 @@ const RecipesPage = props => {
       {recipes ? (
         <Card.Group>
           {recipes.map(recipe => (
-            <RecipeCard recipe={recipe} key={recipe.rid} />
+            <RecipeCard
+              recipe={recipe}
+              key={recipe.rid}
+              authUser={props.firebase.auth.W}
+            />
           ))}
         </Card.Group>
       ) : (
