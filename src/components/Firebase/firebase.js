@@ -71,7 +71,21 @@ class Firebase {
   recipes = () => this.db.ref('recipes')
   recipeAddRef = () => this.db.ref('recipes').push()
 
-  recipeEditRef = () => this.db.ref.child('recipes').update()
+  // recipeEditRef = () => this.db.ref.child('recipes').update()
+
+  recipeFavAdd = (rid, user, status) => {
+    this.db.ref(`recipes/${rid}/fav/${user}`).update(status)
+  }
+  recipeFavDelete = (rid, user) => {
+    this.db.ref(`recipes/${rid}/fav/${user}`).remove()
+  }
+
+  recipeTodoAdd = (rid, user, status) => {
+    this.db.ref(`recipes/${rid}/todo/${user}`).update(status)
+  }
+  recipeTodoDelete = (rid, user) => {
+    this.db.ref(`recipes/${rid}/todo/${user}`).remove()
+  }
 
   ingredient = iid => this.db.ref(`ingredients/${iid}`)
   ingredients = () => this.db.ref('ingredients')

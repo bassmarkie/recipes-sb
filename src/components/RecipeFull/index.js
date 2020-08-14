@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { withRouter } from 'react-router-dom'
 import { compose } from 'recompose'
 import { withFirebase } from '../Firebase'
+import { Status } from '../Status'
 import {
   Grid,
   Header,
@@ -52,6 +53,12 @@ const RecipeFull = props => {
               <Header textAlign="center" as="h1" content={recipe.name} />
             </span>
             <Image src={recipe.image} fluid />
+            <Status
+              fav={recipe.fav}
+              todo={recipe.todo}
+              firebase={props.firebase}
+              rid={rid}
+            />
           </Segment>
           <Divider horizontal>Ingredients</Divider>
           <Grid stackable padded columns={3}>

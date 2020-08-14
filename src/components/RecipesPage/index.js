@@ -4,7 +4,7 @@ import { compose } from 'recompose'
 
 import { withFirebase } from '../Firebase'
 import { RecipeCard } from '../RecipeCard'
-import { Card, Dimmer, Loader } from 'semantic-ui-react'
+import { Header, Card, Dimmer, Loader } from 'semantic-ui-react'
 
 const RecipesPage = props => {
   const [loading, setLoading] = useState(true)
@@ -19,8 +19,17 @@ const RecipesPage = props => {
           ...recipesObject[key],
           rid: key,
         }))
-        setLoading(false)
-        setRecipes(recipesList)
+
+        if (props.match.params.category) {
+          const filteredList = recipesList.filter(
+            recipe => recipe.category === props.match.params.category
+          )
+          setLoading(false)
+          setRecipes(filteredList)
+        } else {
+          setLoading(false)
+          setRecipes(recipesList)
+        }
       }
     })
     if (recipes) props.firebase.recipes().off()
@@ -33,13 +42,19 @@ const RecipesPage = props => {
           <Loader size="large">Loading</Loader>
         </Dimmer>
       )}
+      {props.match.params.category ? (
+        <Header content={props.match.params.category} />
+      ) : (
+        <div />
+      )}
       {recipes ? (
         <Card.Group>
           {recipes.map(recipe => (
             <RecipeCard
               recipe={recipe}
+              fire
               key={recipe.rid}
-              authUser={props.firebase.auth.W}
+              firebase={props.firebase}
             />
           ))}
         </Card.Group>
