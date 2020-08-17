@@ -27,7 +27,6 @@ const RecipeFull = props => {
       if (recipe) {
         setLoading(false)
         setRecipe(recipe)
-        console.log(recipe.ingredients.type)
       }
     })
     if (recipe) props.firebase.recipe(rid).off()
@@ -42,6 +41,12 @@ const RecipeFull = props => {
       )}
       {recipe ? (
         <Segment.Group>
+          <Status
+            fav={recipe.fav}
+            todo={recipe.todo}
+            firebase={props.firebase}
+            rid={rid}
+          />
           <Segment>
             <Label
               ribbon
@@ -53,12 +58,6 @@ const RecipeFull = props => {
               <Header textAlign="center" as="h1" content={recipe.name} />
             </span>
             <Image src={recipe.image} fluid />
-            <Status
-              fav={recipe.fav}
-              todo={recipe.todo}
-              firebase={props.firebase}
-              rid={rid}
-            />
           </Segment>
           <Divider horizontal>Ingredients</Divider>
           <Grid stackable padded columns={3}>
@@ -72,14 +71,15 @@ const RecipeFull = props => {
                       content="m a i n"
                       color="yellow"
                     />
-                    {Object.keys(recipe.ingredients.type.main).map(x => (
-                      <List key={x}>
-                        <List.Item>
-                          <List.Header>{x}</List.Header>
-                          {recipe.ingredients.type.main[x]}
-                        </List.Item>
-                      </List>
-                    ))}
+                    {recipe.ingredients.main &&
+                      Object.keys(recipe.ingredients.main).map(x => (
+                        <List key={x}>
+                          <List.Item>
+                            <List.Header>{x}</List.Header>
+                            {recipe.ingredients.main[x]}
+                          </List.Item>
+                        </List>
+                      ))}
                   </Segment>
                 </Grid.Column>
                 <Grid.Column>
@@ -90,14 +90,15 @@ const RecipeFull = props => {
                       content="s p i c e s"
                       color="olive"
                     />
-                    {Object.keys(recipe.ingredients.type.spices).map(x => (
-                      <List key={x}>
-                        <List.Item>
-                          <List.Header>{x}</List.Header>
-                          {recipe.ingredients.type.spices[x]}
-                        </List.Item>
-                      </List>
-                    ))}
+                    {recipe.ingredients.spices &&
+                      Object.keys(recipe.ingredients.spices).map(x => (
+                        <List key={x}>
+                          <List.Item>
+                            <List.Header>{x}</List.Header>
+                            {recipe.ingredients.spices[x]}
+                          </List.Item>
+                        </List>
+                      ))}
                   </Segment>
                 </Grid.Column>
                 <Grid.Column>
@@ -108,14 +109,15 @@ const RecipeFull = props => {
                       content="m i s c"
                       color="grey"
                     />
-                    {Object.keys(recipe.ingredients.type.misc).map(x => (
-                      <List key={x}>
-                        <List.Item>
-                          <List.Header>{x}</List.Header>
-                          {recipe.ingredients.type.misc[x]}
-                        </List.Item>
-                      </List>
-                    ))}
+                    {recipe.ingredients.misc &&
+                      Object.keys(recipe.ingredients.misc).map(x => (
+                        <List key={x}>
+                          <List.Item>
+                            <List.Header>{x}</List.Header>
+                            {recipe.ingredients.misc[x]}
+                          </List.Item>
+                        </List>
+                      ))}
                   </Segment>
                 </Grid.Column>
               </Grid.Row>

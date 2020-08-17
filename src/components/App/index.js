@@ -11,6 +11,7 @@ import AccountPage from '../Account'
 import AdminPage from '../Admin'
 import RecipesPage from '../RecipesPage'
 import RecipeFull from '../RecipeFull'
+import RecipeAddPage from '../RecipeAdd'
 
 import { Container } from 'semantic-ui-react'
 
@@ -28,6 +29,7 @@ const App = () => (
       <Route path={ROUTES.HOME} component={HomePage} />
       <Route path={ROUTES.ACCOUNT} component={AccountPage} />
       <Route path={ROUTES.ADMIN} component={AdminPage} />
+      <Route path={ROUTES.RECIPE_ADD} component={RecipeAddPage} />
       <Route exact path={ROUTES.RECIPES} component={RecipesPage} />
       <Route path={ROUTES.CATEGORY} component={RecipesPage} />
       <Route path={ROUTES.RECIPE} component={RecipeFull} />

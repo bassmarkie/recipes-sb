@@ -1,14 +1,17 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
+import * as ROUTES from '../../constants/routes'
 
 import { withAuthorization } from '../Session'
-import RecipeAddPage from '../RecipeAdd'
 
-const HomePage = props => (
-  <div>
-    <h1>Home Page</h1>
-    <RecipeAddPage props={props} />
-  </div>
-)
+const HomePage = props => {
+  return (
+    <div>
+      <h1>Home Page</h1>
+      <a href={ROUTES.RECIPE_ADD}>Add Recipe</a>
+    </div>
+  )
+}
 
 const condition = authUser => !!authUser
 export default withAuthorization(condition)(HomePage)

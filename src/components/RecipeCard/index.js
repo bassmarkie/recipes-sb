@@ -3,7 +3,6 @@ import React from 'react'
 import { Status } from '../Status'
 
 export const RecipeCard = ({ recipe, firebase }) => {
-  console.log('card authUser', firebase.auth.W)
   return (
     <Card>
       <Image src={recipe.image} />

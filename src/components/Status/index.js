@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import { Label, Button } from 'semantic-ui-react'
+import { Button } from 'semantic-ui-react'
+import * as ROUTES from '../../constants/routes'
 
 export const Status = props => {
   const authUser = props.firebase.auth.W
-  console.log('props', props)
   const [fav, setFav] = useState(
     props.fav && props.fav.hasOwnProperty(authUser)
   )
@@ -32,18 +32,39 @@ export const Status = props => {
 
   return (
     <div>
-      <Button.Group compact attached="bottom" fluid>
-        <Button
-          icon="heart"
-          color={fav ? 'red' : 'grey'}
-          onClick={handleFavClick}
-        />
-        <Button
-          icon="pin"
-          color={todo ? 'yellow' : 'grey'}
-          onClick={handleTodoClick}
-        />
-      </Button.Group>
+      {authUser ? (
+        <div>
+          <Button.Group compact attached="bottom" fluid>
+            <Button
+              icon="heart"
+              color={fav ? 'red' : 'grey'}
+              onClick={handleFavClick}
+            />
+            <Button
+              icon="pin"
+              color={todo ? 'yellow' : 'grey'}
+              onClick={handleTodoClick}
+            />
+          </Button.Group>
+        </div>
+      ) : (
+        <div>
+          <Button.Group compact attached="bottom" fluid>
+            <Button
+              icon="heart"
+              color={fav ? 'red' : 'grey'}
+              as="a"
+              href={ROUTES.SIGN_IN}
+            />
+            <Button
+              icon="pin"
+              color={todo ? 'blue' : 'grey'}
+              as="a"
+              href={ROUTES.SIGN_IN}
+            />
+          </Button.Group>
+        </div>
+      )}
     </div>
   )
 }
