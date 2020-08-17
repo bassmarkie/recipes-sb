@@ -61,7 +61,7 @@ const RecipeFull = props => {
           </Segment>
           <Divider horizontal>Ingredients</Divider>
           <Grid stackable padded columns={3}>
-            {
+            {recipe.ingredients && (
               <Grid.Row>
                 <Grid.Column>
                   <Segment basic textAlign="center">
@@ -121,18 +121,19 @@ const RecipeFull = props => {
                   </Segment>
                 </Grid.Column>
               </Grid.Row>
-            }
+            )}
           </Grid>
           <Divider horizontal>Instructions</Divider>
           <Grid columns={1} padded>
             <Grid.Row>
               <Grid.Column>
-                {Object.keys(recipe.instructions).map((x, i) => (
-                  <Container
-                    key={x}
-                    content={`${x} - ${recipe.instructions[x]}`}
-                  />
-                ))}
+                {recipe.instructions &&
+                  Object.keys(recipe.instructions).map((x, i) => (
+                    <Container
+                      key={x}
+                      content={`${x} - ${recipe.instructions[x]}`}
+                    />
+                  ))}
               </Grid.Column>
             </Grid.Row>
           </Grid>

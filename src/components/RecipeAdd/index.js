@@ -1,12 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { withAuthorization } from '../Session'
-// import { useForm } from 'react-hook-form'
-// import { Link, withRouter } from 'react-router-dom'
-// import { compose } from 'recompose'
-// import { withFirebase } from '../Firebase'
-// import * as ROUTES from '../../constants/routes'
-// import * as ROLES from '../../constants/roles'
-// import RecipeAddForm from '../RecipeAddForm/index2.js'
+
 import {
   Button,
   Form,
@@ -26,6 +20,7 @@ export const RecipeAddPage = props => {
   const [misc, setMisc] = useState({ '': '' })
   const [instructions, setInstructions] = useState({ 1: '' })
   const [current, setCurrent] = useState('')
+  const [fullList, setFullList] = useState(false)
 
   let instCount = [...Object.keys(instructions)]
   let recipe = {
@@ -49,13 +44,24 @@ export const RecipeAddPage = props => {
     }
 
     const cleanRecipe = removeNull(recipe)
+    const recIng = {
+      ...cleanRecipe.ingredients.main,
+      ...cleanRecipe.ingredients.spices,
+      ...cleanRecipe.ingredients.misc,
+    }
 
     let newRecipe = props.firebase.recipeAddRef()
 
     let rid = newRecipe.key
 
+    for (let key in recIng) {
+      if (!fullList.hasOwnProperty(key)) {
+        console.log({ [key]: true })
+        props.firebase.ingredients().update({ [key]: true })
+      }
+    }
+
     newRecipe.set(cleanRecipe).then(() => {
-      console.log(cleanRecipe)
       props.history.push(`/recipe/${rid}`)
     })
   }
@@ -78,7 +84,15 @@ export const RecipeAddPage = props => {
     }
   }
 
-  useEffect(() => {}, [recipe])
+  useEffect(() => {
+    props.firebase.ingredients().on('value', snapshot => {
+      const temp = snapshot.val()
+      if (temp) {
+        setFullList(temp)
+      }
+    })
+    if (fullList) props.firebase.ingredients().off()
+  })
 
   return (
     <Grid textAlign="center" style={{ height: '100vh' }}>
@@ -122,7 +136,7 @@ export const RecipeAddPage = props => {
                         color="yellow"
                       />
                       {Object.values(main).map((x, i) => (
-                        <Segment vertical key={x}>
+                        <Segment vertical key={i}>
                           <Label
                             attached="top"
                             size="small"
@@ -165,7 +179,7 @@ export const RecipeAddPage = props => {
                         color="olive"
                       />
                       {Object.values(spices).map((x, i) => (
-                        <Segment vertical key={x}>
+                        <Segment vertical key={i}>
                           <Label
                             attached="top"
                             size="small"
@@ -208,7 +222,7 @@ export const RecipeAddPage = props => {
                         color="grey"
                       />
                       {Object.values(misc).map((x, i) => (
-                        <Segment vertical key={x}>
+                        <Segment vertical key={i}>
                           <Label
                             attached="top"
                             size="small"
@@ -258,17 +272,10 @@ export const RecipeAddPage = props => {
                 placeholder={x}
               />
             ))}
-            <Button
-              type="submit"
-              color="orange"
-              fluid
-              size="large"
-              // disabled={isInvalid}
-            >
+            <Button type="submit" color="orange" fluid size="large">
               Add Your Recipe
             </Button>
           </Segment>
-          {/* {error && <p>{error.message}</p>} */}
         </Form>
       </Grid.Column>
     </Grid>
